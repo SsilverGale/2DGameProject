@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 
@@ -18,10 +19,18 @@ public class Player : MonoBehaviour
     //A boolean to check facing direction of player. Will be used for sprite
     private bool isFacingRight;
 
+    //Variables for keeping track of melons
+    public int melonCount;
+    int maxMelons;
+
+    [SerializeField] private Text UI;
+
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        melonCount = 0;
+        maxMelons = 1;
     }
 
     // Update is called at a fixed rate
@@ -42,11 +51,22 @@ public class Player : MonoBehaviour
         {
             body.AddForce(jumpPower * transform.up, ForceMode2D.Force);
         }
+        UI.text = "Melons: " + melonCount.ToString() + "/" + maxMelons.ToString();
     }
 
     //Function that chacks if the player is grounded
     private bool isGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Gain a melon for grabbing a melon
+        if (collision.gameObject.tag == "Melon")
+        {
+            melonCount++;
+            Debug.Log("Current melons" + melonCount);
+        }
     }
 }
