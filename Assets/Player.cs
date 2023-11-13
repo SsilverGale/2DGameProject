@@ -37,17 +37,17 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         //Move left
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow))
         {
             body.AddForce(accelerationPower * -transform.right, ForceMode2D.Force);
         }
         //Move Right
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
         {
             body.AddForce(accelerationPower * transform.right, ForceMode2D.Force);
         }
         //Jump
-        if (Input.GetKey(KeyCode.W)&&isGrounded())
+        if ((Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.UpArrow))&& isGrounded())
         {
             body.AddForce(jumpPower * transform.up, ForceMode2D.Force);
         }
